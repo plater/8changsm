@@ -110,7 +110,7 @@ void Update_cashaudit(uint8_t addcash)
     //Add to clearable total cash
     pvcash = pvcash + (uint16_t)addcash;
     //Add to unclearable cash total
-    pnvcash = pnvcash + (uint24_t)addcash;
+    pnvcash = pnvcash + (__uint24)addcash;
     //Save updated values.
     Write_NVstore(cashinv, ((uint8_t*) &pvcash), 0x02);
     Write_NVstore(cashint, ((uint8_t*) &pnvcash), 0x03);
@@ -197,7 +197,7 @@ void Audit(void)
     Read_NVstore(cashinv, ((uint8_t*) &pvcash), 0x02);
     Read_NVstore(cashint, ((uint8_t*) &pnvcash), 0x03);
     lcd_string(cashinmsg, line1);
-    displ_hex((uint24_t)pvcash);
+    displ_hex((__uint24)pvcash);
     lcd_string(totalmsg, line2);
     displ_hex(pnvcash);
     lcd_string(vendispmsg, line3);
@@ -212,7 +212,7 @@ void Audit(void)
             channel = get_channel(buttons);
             uint8_t vends = DATAEE_ReadByte(vendstore + channel);
             lcd_string(totalvendsm, line4);
-            displ_hex((uint24_t)vends);
+            displ_hex((__uint24)vends);
             while(butin() != 0x00){}
             lcd_string(clrline, line4);
         }
@@ -243,7 +243,7 @@ void Hopper_coin(void)
     senspos = bflag + 2;
     uint8_t coinval = DATAEE_ReadByte(hopcoin);
     lcd_dispadd(senspos);
-    displ_hex((uint24_t)coinval);
+    displ_hex((__uint24)coinval);
     while(mdbflags.endis)
     {
         buttons = butindb();
@@ -300,7 +300,7 @@ void Update_Hopcoin(uint8_t newval, uint8_t direction)
     lcd_string(clrmsg, senspos);
     DATAEE_WriteByte(hopcoin, newval);
     lcd_dispadd(senspos);
-    displ_hex((uint24_t)newval);
+    displ_hex((__uint24)newval);
 }
 
 uint8_t Read_Service(void)

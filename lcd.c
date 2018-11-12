@@ -189,11 +189,11 @@ void displ_noteer(void)
     venflags.noterr = 0;
 }
 
-void displ_hex(uint24_t hexnum)
+void displ_hex(__uint24 hexnum)
 {
     signed char i = 0;
     uint8_t value[8];
-    uint24_t hexnumsave = hexnum;
+    __uint24 hexnumsave = hexnum;
     while(hexnum > 0)
     {
         value[i] = hexnum % 10;

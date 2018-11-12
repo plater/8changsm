@@ -43,7 +43,7 @@ void gsm_zerobuff(uint8_t* gsmsgbuf, uint16_t count )
 
 void gsm_msg(uint8_t *msgadd)
 {
-    uint24_t msgbkup = msgadd;
+    __uint24 msgbkup = msgadd;
     retrans:
     msgadd = msgbkup;
     gsmflags.retransmit = 0;

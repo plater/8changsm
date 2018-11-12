@@ -28,7 +28,7 @@ volatile uint8_t nvcash[3];
 volatile uint8_t tvends[8];
 volatile uint8_t vcashout[2];
 volatile uint16_t pvcash;
-volatile uint24_t pnvcash;
+volatile __uint24 pnvcash;
 volatile uint8_t senspos;
 volatile uint8_t dummy[8];
 volatile uint8_t pricevend[8];
@@ -52,7 +52,7 @@ const uint16_t credmem = 0x00;
 const uint16_t  cashinv = 0x02;
 //Total vends, clearable 8 x uint8_t
 const uint16_t vendstore = 0x04;
-//Non clearable total cash uint_24_t
+//Non clearable total cash __uint_24_t
 const uint16_t cashint = 0x0C;
 //Prices per vend 8 x uint8_t
 const uint16_t pricestore = 0x0F;

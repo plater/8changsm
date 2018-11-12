@@ -233,7 +233,7 @@ void init_pricestore(void)
 void disable_channel(uint8_t channel)
 {
     uint8_t errormask = 0x01;
-    uint8_t errormask = errormask << channel;
+    errormask = errormask << channel;
     errormask = errormask | DATAEE_ReadByte(venderrors);
     DATAEE_WriteByte(venderrors, errormask);
 }

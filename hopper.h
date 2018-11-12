@@ -17,7 +17,7 @@ uint8_t outcoins;
 signed char hopercount = 3;
 
 void hopper_test(void);
-bool hopper_pay(uint8_t change);
+uint8_t hopper_pay(uint8_t change);
 bool switch_read(void);
 bool pay_coin(void);
 void Update_coinsout(uint8_t coinsout);

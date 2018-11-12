@@ -86,7 +86,7 @@ const uint8_t senset[] = "  Setup Sensor";
 const uint8_t credclr[] = "Push button 1 to clear credits   and exit";
 const uint8_t vendtest[] = " Push button to     vend";
 const uint8_t notetest[] = "  Insert Note";
-const uint8_t exit[] = "Exit";
+//const uint8_t exit[] = "Exit";
 const uint8_t servmsg[] = "1 = Audit 2 = Sensor3=Hop-Coin 4=Note-en5=Cred-clr 6=Prices 7=Vend setup 8=Exit";
 const uint8_t noteerr[] = "   Note error     code = 0x";
 const uint8_t inithop[] = "  Initialize Hopper";
@@ -122,7 +122,7 @@ uint8_t lcdfunc;
 uint8_t lcdata;
 uint8_t lcdline;
 uint8_t stradd;
-uint24_t hexnum;
+__uint24 hexnum;
 uint8_t ercode;
 uint8_t lcdaddress;
 uint8_t dspposition;
@@ -149,7 +149,7 @@ void disp_clock(void);
 
 void lcd_test(void);
 
-void displ_hex(uint24_t);
+void displ_hex(__uint24);
 
 void displ_price(uint8_t vendprice);
 
