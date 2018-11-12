@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Andre_8Chan_C.X
+PROJECTNAME=8changsm
 
 # Active Configuration
 DEFAULTCONF=default

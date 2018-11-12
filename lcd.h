@@ -35,7 +35,6 @@
 #include <xc.h>
 #include "mcc_generated_files/mcc.h"
 #include <stdbool.h>
-#include <p18f47k40.h>
 
 #include <xc.h> // include processor files - each processor file is guarded. 
 signed char count;
