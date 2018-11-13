@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/davepl/MPLABXProjects/8changsm/dispense.c</file>
+            <file>file:/home/davepl/MPLABXProjects/8changsm/hopper.c</file>
+            <file>file:/home/davepl/MPLABXProjects/8changsm/hopper.h</file>
+            <file>file:/home/davepl/MPLABXProjects/8changsm/lcd.h</file>
+            <file>file:/home/davepl/MPLABXProjects/8changsm/vend.h</file>
+            <file>file:/home/davepl/MPLABXProjects/8changsm/mcc_generated_files/memory.h</file>
+            <file>file:/home/davepl/MPLABXProjects/8changsm/main.c</file>
+            <file>file:/home/davepl/MPLABXProjects/8changsm/mcc_generated_files/mcc.h</file>
+        </group>
     </open-files>
 </project-private>
