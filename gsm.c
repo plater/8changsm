@@ -111,7 +111,7 @@ void gsm_init(void)
 //   INTCONbits.GIE = 1;
  //   INTCONbits.PEIE = 1;
 //    while(1 == 1){}
-    gsm_getbalance();
+//    gsm_getbalance();
 //    gsm_msg(loctim);
 //    gsm_receive(1);
     
@@ -125,11 +125,11 @@ void gsm_init(void)
     gsm_msg(smsdel);
     gsm_receive(1, gsmmsg);
     
-    gsm_msg(setgsm);
+    gsm_msg(smslst);
     gsm_receive(1,gsmmsg);
     
-    gsm_msg(ussdw2);
-    gsm_receive(2, gsmmsg);
+    gsm_msg(smdqry);
+    gsm_receive(1, gsmmsg);
     
     gsm_msg(engqry);
     gsm_receive(2, gsmmsg);
@@ -161,8 +161,10 @@ void clock_display(void)
             gsmflags.msgavl = 1;
         }
     }
-    if(eusart2RxHead != 0x00 )
+    if(gsmflags.msgavl)
     {
+        lcd_string(gsmusm, line1);
+        parse_sms();
         asm("nop");
     }
     INTCONbits.PEIE = 0;
@@ -172,6 +174,20 @@ void clock_display(void)
  //   gsm_receive(71);
     
     goto dispclka;
+}
+
+void parse_sms(void)
+{
+    int diffr = memcmp(gsmusm, cmti, 0x05);
+    if(diffr == 0x00)
+    {
+        index = (gsmusm[0x0C] & 0x0F) * 2;
+        gsm_msg(smstxt);
+        gsm_receive(1, gsmmsg);
+        gsm_msg(smslst);
+        gsm_receive(index, gsmmsg);
+        asm("NOP");
+    }
 }
 
 void parse_date_time(void)

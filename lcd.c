@@ -225,7 +225,7 @@ void lcd_string(uint8_t *lcdstring, uint8_t lcdline)
         //MSB high for address
         lcd_dispadd(lcdline | 0x80);
     }
-    for(stradd = 0; lcdstring[stradd] != 0; stradd++)
+    for(stradd = 0; lcdstring[stradd] >= 0x10; stradd++)
     {
         lcdata = lcdstring[stradd];
         lcd_writeC(lcdstring[stradd]);
