@@ -157,7 +157,7 @@ void clock_display(void)
     {
         if(PIR3bits.RC2IF)
         {
-            gsm_receive(1, gsmusm);
+            gsm_receive(1, gsmusm);gsmmsg
             gsmflags.msgavl = 1;
         }
     }
@@ -185,8 +185,24 @@ void parse_sms(void)
         gsm_msg(smstxt);
         gsm_receive(1, gsmmsg);
         gsm_msg(smslst);
-        gsm_receive(index, gsmmsg);
+        gsm_receive(++index, gsmmsg);
+        gsm_msg(setgsm);
+        gsm_receive(1, gsdate);
+        gsm_msg(smstxt);
+        gsm_receive(1, gstime);
+        gsm_msg(sendms);
+        gsm_msg(pnum);
+        gsm_receive(1, gstime);
+        gsm_msg(ackmsg);
+        //Send ^Z or SUB to terminate sms
+        gsm_transmit(0x1A);
+        gsm_transmit(0x0D);
+        gsm_receive(1, gsdate);
         asm("NOP");
+        gsm_msg(smstxt);
+        gsm_receive(1, gsmusm);
+        gsm_msg(smsdel);
+        gsm_receive(1, gsmtim);
     }
 }
 

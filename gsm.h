@@ -20,12 +20,12 @@ extern "C" {
 
 //Gsm related memory
 uint8_t gsmbyte = 0;
-//gsm scratchpad
+//gsm scratch pad
 uint8_t gsmmsg[512];
 //sms storage
 uint8_t gsmums[512];
 //Store unsolicited notifications
-uint8_t gsmusm[23];
+uint8_t gsmusm[24];
 uint8_t gsmtim[23];
 //Store date
 uint8_t gsdate[10];
@@ -34,14 +34,20 @@ uint8_t gstime[10];
 uint8_t noofline;
 uint16_t index;
 
+//GSM eeprom storage locations from 0x40 onwards
+//Nine digits for allowed phone number.
+const uint16_t phonenum = 0x40;
+
 //GSM unsolicited replies for comparison
 
 const uint8_t cmti[] = "+CMTI";
 const uint8_t pnum[] = "\"+27766520007\"\r";
+const uint8_t ackmsg[] = "Message received";
 
 //GSM messages sms
+const uint8_t sendms[] = "AT+CMGS=";
 const uint8_t smsnmd[] = "AT+CNMI=2,1,0,0,0\r";
-const uint8_t smdqry[] = "AT+CNMI?\r";
+const uint8_t smdqry[] = "AT+CSMS?\r";
 const uint8_t smsdel[] = "AT+CMGDA=\"DEL ALL\"\r";
 const uint8_t smslst[] = "AT+CMGL=\"ALL\"\r";
 const uint8_t smscap[] = "AT+CMGL=?\r";

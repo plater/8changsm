@@ -92,6 +92,7 @@ const uint16_t chan8time = 0x2D;
 const uint16_t nosentime = 0x2E;
 //Hopper error disable byte
 const uint16_t hoperror = 0x2F;
+//WARNING: 0x40 + is used for gsm eeprom!
 //Flags to disable sensor check on vend if set
 struct
 {
