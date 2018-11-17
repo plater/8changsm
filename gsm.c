@@ -157,7 +157,7 @@ void clock_display(void)
     {
         if(PIR3bits.RC2IF)
         {
-            gsm_receive(1, gsmusm);gsmmsg
+            gsm_receive(1, gsmusm);
             gsmflags.msgavl = 1;
         }
     }
