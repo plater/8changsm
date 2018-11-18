@@ -206,6 +206,38 @@ void parse_sms(void)
     }
 }
 
+void sms_report(void)
+{
+    
+}
+
+//Take a 24 bit hex value and convert it.
+// Return pointer to eight ASCII digits lsd first.
+uint8_t* convert_hex(__uint24 hexnum)
+{
+    signed char i = 0;
+    uint8_t value[8];
+    __uint24 hexnumsave = hexnum;
+    while(hexnum > 0)
+    {
+        value[i] = hexnum % 10;
+        hexnum /= 10;
+        i = i + 1;
+    }
+    return value;
+    
+    while(i > 0)
+    {
+        i--;
+        lcd_writeC(value[i] | 0x30);
+    }
+    //In case hexnum is zero
+    if(hexnumsave == 0)
+    {
+       lcd_writeC(0x30);
+    }
+}
+
 void parse_date_time(void)
 {
     gsm_zerobuff(gsdate, 0x014);

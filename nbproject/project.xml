@@ -38,6 +38,7 @@
             <word>linkbits</word>
             <word>linkflag</word>
             <word>lsb</word>
+            <word>lsd</word>
             <word>mdb</word>
             <word>mdbdata</word>
             <word>msb</word>
