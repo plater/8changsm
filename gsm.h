@@ -114,7 +114,11 @@ uint8_t gsm_unsolic(void);
 
 void clock_display(void);
 
+void start_sms(void);
+
 void sms_report(void);
+
+uint8_t write_sms(uint8_t i, uint8_t *msgpnt);
 
 uint8_t* convert_hex(__uint24 hexnum);
 

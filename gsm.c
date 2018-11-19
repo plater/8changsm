@@ -198,17 +198,70 @@ void parse_sms(void)
         gsm_transmit(0x1A);
         gsm_transmit(0x0D);
         gsm_receive(1, gsdate);
-        asm("NOP");
+        asm("NOP"); //gsm_receive(1, gsdate); needs to be fixed!
         gsm_msg(smstxt);
         gsm_receive(1, gsmusm);
         gsm_msg(smsdel);
         gsm_receive(1, gsmtim);
+        sms_report();
+        asm("NOP");
     }
+}
+
+void start_sms(void)
+{
+    gsm_msg(setgsm);
+    gsm_receive(1, gsmmsg);
+    gsm_msg(smstxt);
+    gsm_receive(1, gsmmsg);
+    gsm_msg(sendms);
+    gsm_msg(pnum);
+    gsm_receive(1, gsmmsg);
 }
 
 void sms_report(void)
 {
+    uint8_t i = 0;
+    uint8_t z = i;
+    gsm_gettime();
     
+    gsmmsg[i] = 0x20;
+    //Read in "Date "
+    i = write_sms(i,clockdate);
+    //Read in actual date.
+    i = write_sms(i,gsdate);
+    gsmmsg[i++] = 0x20;
+    //Things go wrong!
+    i = write_sms(i,clocktime);
+    i = write_sms(i,gstime);
+    gsmmsg[i++] = 0x20;
+    gsmmsg[i++] = ',';
+    gsmmsg[i++] = 0x20;
+    Read_NVstore(cashinv, ((uint8_t*) &pvcash), 0x02);
+    Read_NVstore(cashint, ((uint8_t*) &pnvcash), 0x03);
+    uint8_t *gsmval = convert_hex((__uint24) pvcash);
+    i = write_sms(i,gsmval);
+    gsmmsg[i++] = ',';
+    gsmmsg[i++] = 0x20;
+    gsmval = convert_hex(pnvcash);
+    i = write_sms(i,gsmval);
+    gsmmsg[i] = 0x00;
+    start_sms();
+    gsm_msg(gsmmsg);
+    gsm_transmit(0x1A);
+    gsm_transmit(0x0D);
+}
+
+uint8_t write_sms(uint8_t i, uint8_t *msgpnt)
+{
+    uint8_t x = 0x00;
+    gsmbyte = 0x20;
+    while(gsmbyte != 0x00)
+    {
+        gsmbyte = msgpnt[x++];
+        gsmmsg[i++] = gsmbyte;
+    }
+    return --i;
 }
 
 //Take a 24 bit hex value and convert it.
@@ -224,20 +277,17 @@ uint8_t* convert_hex(__uint24 hexnum)
         hexnum /= 10;
         i = i + 1;
     }
-    return value;
     
-    while(i > 0)
-    {
-        i--;
-        lcd_writeC(value[i] | 0x30);
-    }
+    
     //In case hexnum is zero
     if(hexnumsave == 0)
     {
-       lcd_writeC(0x30);
+       value[0] = 0x30;
+       value[1] = 0x00;
     }
-}
+    return value;
 
+}
 void parse_date_time(void)
 {
     gsm_zerobuff(gsdate, 0x014);
