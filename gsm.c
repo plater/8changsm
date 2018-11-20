@@ -145,13 +145,13 @@ void gsm_init(void)
 void clock_display(void)
 {
     INTCONbits.PEIE = 0;
-    PIE3bits.RC2IE =1;
+    PIE3bits.RC2IE =0;
     dispclka:
     TMR2_Initialize();
     T2CONbits.TMR2ON = 1;
     gsm_gettime();
     disp_clock();
-    INTCONbits.PEIE = 1;
+    INTCONbits.PEIE = 0;
     gsmflags.msgavl = 0;
     while(!PIR4bits.TMR2IF)
     {
@@ -225,29 +225,33 @@ void sms_report(void)
     uint8_t z = i;
     gsm_gettime();
     
-    gsmmsg[i] = 0x20;
+    gsm_zerobuff(gsmums, 0x200);
+    gsmums[i] = 0x20;
     //Read in "Date "
     i = write_sms(i,clockdate);
     //Read in actual date.
     i = write_sms(i,gsdate);
-    gsmmsg[i++] = 0x20;
+    gsmums[i++] = 0x20;
     //Things go wrong!
     i = write_sms(i,clocktime);
     i = write_sms(i,gstime);
-    gsmmsg[i++] = 0x20;
-    gsmmsg[i++] = ',';
-    gsmmsg[i++] = 0x20;
+    gsmums[i++] = 0x20;
+    gsmums[i++] = ',';
+    gsmums[i++] = 0x20;
+    gsmums[i++] = 'R';
     Read_NVstore(cashinv, ((uint8_t*) &pvcash), 0x02);
     Read_NVstore(cashint, ((uint8_t*) &pnvcash), 0x03);
     uint8_t *gsmval = convert_hex((__uint24) pvcash);
     i = write_sms(i,gsmval);
-    gsmmsg[i++] = ',';
-    gsmmsg[i++] = 0x20;
+    gsmums[i++] = ',';
+    gsmums[i++] = 0x20;
+    gsmums[i++] = 'R';
     gsmval = convert_hex(pnvcash);
     i = write_sms(i,gsmval);
-    gsmmsg[i] = 0x00;
+    
+    gsmums[i] = 0x00;
     start_sms();
-    gsm_msg(gsmmsg);
+    gsm_msg(gsmums);
     gsm_transmit(0x1A);
     gsm_transmit(0x0D);
 }
@@ -259,7 +263,7 @@ uint8_t write_sms(uint8_t i, uint8_t *msgpnt)
     while(gsmbyte != 0x00)
     {
         gsmbyte = msgpnt[x++];
-        gsmmsg[i++] = gsmbyte;
+        gsmums[i++] = gsmbyte;
     }
     return --i;
 }
@@ -268,18 +272,26 @@ uint8_t write_sms(uint8_t i, uint8_t *msgpnt)
 // Return pointer to eight ASCII digits lsd first.
 uint8_t* convert_hex(__uint24 hexnum)
 {
-    signed char i = 0;
+    signed char x = 0;
     uint8_t value[8];
+    uint8_t xvalue[8];
     __uint24 hexnumsave = hexnum;
     while(hexnum > 0)
     {
-        value[i] = hexnum % 10;
+        xvalue[x] = hexnum % 10;
         hexnum /= 10;
-        i = i + 1;
+        xvalue[x] = xvalue[x] | 0x30;
+        x++;
+    }
+    //insert null string terminator
+    value[x--] = 0x00;
+    uint8_t y = 0;
+    while(x >= 0)
+    {
+        value[x--] = xvalue[y++];
     }
     
-    
-    //In case hexnum is zero
+        //In case hexnum is zero
     if(hexnumsave == 0)
     {
        value[0] = 0x30;

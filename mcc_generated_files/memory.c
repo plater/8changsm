@@ -50,13 +50,21 @@
 #include <xc.h>
 #include "memory.h"
 
-//__EEPROM_DATA(5,0,0,0,0,0,0,0); //0 to 7
-//__EEPROM_DATA(0,0,0,0,0,0,0,5); //8 to F
-//__EEPROM_DATA(10,15,20,25,30,35,40,0); //10 to 17
-//__EEPROM_DATA(0x07,0,0,0,0x02,0,0,0); //18 to 1F
-//__EEPROM_DATA(0x00,0,0,0,0x00,0,0,0); //20 to 27
-//__EEPROM_DATA(0x00,0,0,0,0x00,0,0,0); //28 to 2F
-
+//Remember to reset configuration
+/**
+__EEPROM_DATA(5,0,0,0,0,0,0,0) ; //0 to 7
+__EEPROM_DATA(0,0,0,0,0,0,0,5) ; //8 to F
+__EEPROM_DATA(10,15,20,25,30,35,40,0) ; //10 to 17
+__EEPROM_DATA(0x07,0,0,0,0x02,0,0,0) ; //18 to 1F
+__EEPROM_DATA(0x00,0,0,0,0x00,0,0,0) ; //20 to 27
+__EEPROM_DATA(0x00,0,0,0,0x00,0,0,0) ; //28 to 2F
+__EEPROM_DATA(0,0,0,0,0,0,0,0) ; //30 to 37
+__EEPROM_DATA(0,0,0,0,0,0,0,0) ; //38 to 3F
+__EEPROM_DATA('+','2','7','8','3','4','6','0') ; //40 to 47
+__EEPROM_DATA('4','6','0','9',0,0,0,0) ; //48 to 4F
+__EEPROM_DATA(0,0,0,0,0,0,0,0) ; //50 to 57
+__EEPROM_DATA(0,0,0,0,0,0,0,0) ; //58 to 5F
+ * /
 /**
   Section: Flash Module APIs
 */
