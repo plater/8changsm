@@ -125,6 +125,8 @@ void gsm_init(void)
     gsm_msg(smsdel);
     gsm_receive(1, gsmmsg);
     
+    gsm_getbalance();
+    
     gsm_msg(smslst);
     gsm_receive(1,gsmmsg);
     
@@ -248,7 +250,30 @@ void sms_report(void)
     gsmums[i++] = 'R';
     gsmval = convert_hex(pnvcash);
     i = write_sms(i,gsmval);
+    gsmums[i++] = ',';
+    i = write_sms(i, totalvendsm);
+    //Total vends
+    uint16_t vendstores = vendstore;
+    for(char x = 0; x < 0x08; x++)
+    {
+        gsmums[i++] = (x +1) | 0x30;
+        gsmums[i++] = '=';
+        gsmbyte = DATAEE_ReadByte(vendstores + x);
+        gsmval = convert_hex((__uint24) gsmbyte);
+        i = write_sms(i,gsmval);
+        gsmums[i++] = ',';
+    }
+    gsmums[i++] = 0x20;
+    //Display change coins given
+    i = write_sms(i,coinsout);
+    Read_NVstore(cashoutv, ((uint8_t*) &pvcash), 0x02);
+    gsmval = convert_hex((__uint24) pvcash);
+    i = write_sms(i,gsmval);
+    i = write_sms(i,coinvalu);
+    gsmbyte = DATAEE_ReadByte(hopcoin);
+    gsmums[i++] = gsmbyte | 0x30;
     
+    //Null string terminator
     gsmums[i] = 0x00;
     start_sms();
     gsm_msg(gsmums);
@@ -358,12 +383,12 @@ void gsm_getbalance(void)
     if(gsmflags.mtn)
     {
         gsm_msg(ussdwm);
-        gsm_receive(11,gsmmsg);
+        gsm_receive(11,gsmums);
     }
     else
     {
         gsm_msg(ussdwv);
-        gsm_receive(3,gsmmsg);
+        gsm_receive(3,gsmums);
     }
     gsm_msg(ussdwc);
     gsm_receive(1,gsmmsg);

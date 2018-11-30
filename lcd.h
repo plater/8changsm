@@ -116,6 +116,9 @@ const uint8_t totalvendsm[] = "Vends ";
 const uint8_t vendispmsg[] = "Use button / Service";
 const uint8_t clocktime[] = "Time: ";
 const uint8_t clockdate[] = "Date: ";
+const uint8_t coinsout[] = "coins out ";
+const uint8_t coinvalu[] = " @ coin = R";
+
 
 uint8_t bflag;
 uint8_t lcdfunc;

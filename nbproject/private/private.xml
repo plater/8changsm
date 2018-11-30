@@ -5,11 +5,13 @@
         <group>
             <file>file:/home/davepl/MPLABXProjects/8changsm/lcd.c</file>
             <file>file:/home/davepl/MPLABXProjects/8changsm/vend.c</file>
+            <file>file:/home/davepl/MPLABXProjects/8changsm/hopper.c</file>
             <file>file:/home/davepl/MPLABXProjects/8changsm/unsolsms.txt</file>
             <file>file:/home/davepl/MPLABXProjects/8changsm/lcd.h</file>
             <file>file:/home/davepl/MPLABXProjects/8changsm/gsm.c</file>
             <file>file:/home/davepl/MPLABXProjects/8changsm/vend.h</file>
             <file>file:/home/davepl/MPLABXProjects/8changsm/gsm.h</file>
+            <file>file:/home/davepl/MPLABXProjects/8changsm/mcc_generated_files/memory.c</file>
             <file>file:/home/davepl/MPLABXProjects/8changsm/main.c</file>
         </group>
     </open-files>
