@@ -42,6 +42,7 @@ const uint16_t phonenum = 0x40;
 
 const uint8_t cmti[] = "+CMTI";
 const uint8_t pnum[] = "\"+27766520007\"\r";
+const uint8_t anum[] = "\"+27834604609\"\r";
 const uint8_t ackmsg[] = "Message received";
 
 //GSM messages sms
