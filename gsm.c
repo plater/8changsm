@@ -194,7 +194,8 @@ void parse_sms(void)
         gsm_receive(1, gstime);
         gsm_msg(sendms);
         gsm_msg(pnum);
-        gsm_receive(1, gstime);
+        gsm_numack();
+        //if gsmflags.abrtmsg send call me instead
         gsm_msg(ackmsg);
         //Send ^Z or SUB to terminate sms
         gsm_transmit(0x1A);
@@ -218,7 +219,30 @@ void start_sms(void)
     gsm_receive(1, gsmmsg);
     gsm_msg(sendms);
     gsm_msg(pnum);
-    gsm_receive(1, gsmmsg);
+    gsm_numack();
+    //if gsmflags.abrtmsg send call me instead
+}
+
+void gsm_numack(void)
+{
+    gsmbyte = 0x00;
+    uint8_t x = 4;
+    gsmflags.abrtmsg = 0;
+    while(x > 0)
+    {
+        gsmbyte = EUSARTG_Read();
+        if(gsmbyte == '4')
+        {
+            gsmflags.abrtmsg = 1;
+            break;
+        }
+        if(gsmbyte == '\"')
+        {
+            gsmflags.abrtmsg = 0;
+            break;
+        }
+        x--;
+    }
 }
 
 void sms_report(void)
@@ -276,6 +300,11 @@ void sms_report(void)
     //Null string terminator
     gsmums[i] = 0x00;
     start_sms();
+    //if gsmflags.abrtmsg send call me instead
+    if(gsmflags.abrtmsg)
+    {
+        
+    }
     gsm_msg(gsmums);
     gsm_transmit(0x1A);
     gsm_transmit(0x0D);

@@ -14,6 +14,7 @@
             <make-dep-projects/>
         </data>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>abrtmsg</word>
             <word>cashint</word>
             <word>cashinv</word>
             <word>cashoutv</word>
@@ -28,6 +29,7 @@
             <word>eeprom</word>
             <word>gsm</word>
             <word>gsmbyte</word>
+            <word>gsmflags</word>
             <word>gsmtim</word>
             <word>hexnum</word>
             <word>init</word>

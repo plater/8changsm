@@ -44,6 +44,8 @@ const uint8_t cmti[] = "+CMTI";
 const uint8_t pnum[] = "\"+27766520007\"\r";
 const uint8_t anum[] = "\"+27834604609\"\r";
 const uint8_t ackmsg[] = "Message received";
+const uint8_t mtmpcm[] = "*121*";
+const uint8_t vdcpcm[] = "*140*";
 
 //GSM messages sms
 const uint8_t sendms[] = "AT+CMGS=";
@@ -87,7 +89,7 @@ struct
     unsigned meerror : 1;
     unsigned mtn : 1;
     unsigned msgavl : 1;
-    unsigned spare4 : 1;
+    unsigned abrtmsg : 1;
     unsigned spare5 : 1;
     unsigned spare6 : 1;
     unsigned spare7 : 1;
@@ -104,6 +106,8 @@ void gsm_transmit(uint8_t txbyte);
 void gsm_gettime(void);
 
 void parse_sms(void);
+
+void gsm_numack(void);
 
 void gsm_getbalance(void);
 
