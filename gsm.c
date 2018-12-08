@@ -249,6 +249,7 @@ void sms_report(void)
 {
     uint8_t i = 0;
     uint8_t z = i;
+    gsm_getbalance();
     gsm_gettime();
     
     gsm_zerobuff(gsmums, 0x200);
@@ -296,7 +297,7 @@ void sms_report(void)
     i = write_sms(i,coinvalu);
     gsmbyte = DATAEE_ReadByte(hopcoin);
     gsmums[i++] = gsmbyte | 0x30;
-    
+    i = write_sms(i, gsmusd);
     //Null string terminator
     gsmums[i] = 0x00;
     start_sms();
@@ -405,19 +406,57 @@ void gsm_gettime(void)
     parse_date_time();
 }
 
+//past first 0A to 0X0C spaces 
 void gsm_getbalance(void)
 {
     gsm_msg(setgsm);
     gsm_receive(1,gsmmsg);
+    uint8_t x = 0x0C;
+    uint8_t y = 0x00;
+    gsmusd[y++] = ' ';
+    gsmflags.eomsg = 1;
+// For mtn each line remove 0x0A
+// Parse until 0A  0A
     if(gsmflags.mtn)
     {
         gsm_msg(ussdwm);
-        gsm_receive(11,gsmums);
+        gsm_receive(11,gsmmsg);
+        gsmusd[y++] = gsmmsg[x++];
+        while(gsmflags.eomsg)
+        {
+            gsmbyte = gsmmsg[x++];
+            if(gsmbyte == 0x0A)
+            {//Add 0x20 inplace of 0A
+                gsmusd[y++] = ',';
+                gsmusd[y++] = ' ';
+                gsmbyte = gsmmsg[x++];
+                if(gsmbyte == 0x0A)
+                {
+                    gsmflags.eomsg = 0;
+                    gsmusd[y++] = 0x22;
+                    gsmbyte = 0x00;
+                }
+            }
+            gsmusd[y++] = gsmbyte;
+        }
     }
+//For vodacom parse to first 0x0A
     else
     {
         gsm_msg(ussdwv);
-        gsm_receive(3,gsmums);
+        gsm_receive(3,gsmmsg);
+        gsmusd[y++] = gsmmsg[x++];
+        while(gsmflags.eomsg)
+        {
+            gsmbyte = gsmmsg[x++];
+            if(gsmbyte == 0x0A)
+            {
+                gsmflags.eomsg = 0;
+                gsmusd[y++] = 0x22;
+                gsmbyte = 0x00;
+            }
+            gsmusd[y++] = gsmbyte;
+        }
     }
     gsm_msg(ussdwc);
     gsm_receive(1,gsmmsg);
@@ -629,10 +668,15 @@ void gsm_netwait(void)
 
 uint8_t EUSARTG_Read(void)
 {
+    TMR2_Initialize();
+    T2CONbits.TMR2ON = 1;
 //    TRISCbits.TRISC3 = 1;
     while(!PIR3bits.RC2IF)
     {
-        
+        if(PIR4bits.TMR2IF)
+        {
+            return 0x0A;
+        }
     }
 //    TRISCbits.TRISC3 = 0;
 

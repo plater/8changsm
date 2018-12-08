@@ -24,6 +24,8 @@ uint8_t gsmbyte = 0;
 uint8_t gsmmsg[512];
 //sms storage
 uint8_t gsmums[512];
+//ussd storage
+uint8_t gsmusd[128];
 //Store unsolicited notifications
 uint8_t gsmusm[24];
 uint8_t gsmtim[23];
@@ -90,7 +92,7 @@ struct
     unsigned mtn : 1;
     unsigned msgavl : 1;
     unsigned abrtmsg : 1;
-    unsigned spare5 : 1;
+    unsigned eomsg : 1;
     unsigned spare6 : 1;
     unsigned spare7 : 1;
 } gsmflags;

@@ -12,6 +12,16 @@
             <asminc-extensions/>
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
+            <sourceRootList/>
+            <confList>
+                <confElem>
+                    <name>default</name>
+                    <type>2</type>
+                </confElem>
+            </confList>
+            <formatting>
+                <project-formatting-style>false</project-formatting-style>
+            </formatting>
         </data>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
             <word>abrtmsg</word>
@@ -30,6 +40,7 @@
             <word>gsm</word>
             <word>gsmbyte</word>
             <word>gsmflags</word>
+            <word>gsmmsg</word>
             <word>gsmtim</word>
             <word>hexnum</word>
             <word>init</word>
@@ -62,6 +73,7 @@
             <word>Tx</word>
             <word>uint</word>
             <word>unclearable</word>
+            <word>ussd</word>
             <word>vcash</word>
             <word>venderrors</word>
             <word>vends</word>
