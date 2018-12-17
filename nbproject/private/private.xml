@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
+        <file>
+            <url>gsm.c</url>
+            <bookmark id="1">
+                <name/>
+                <line>271</line>
+                <key/>
+            </bookmark>
+            <bookmark id="2">
+                <name/>
+                <line>433</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/davepl/MPLABXProjects/8changsm/lcd.c</file>
-            <file>file:/home/davepl/MPLABXProjects/8changsm/vend.c</file>
-            <file>file:/home/davepl/MPLABXProjects/8changsm/hopper.c</file>
-            <file>file:/home/davepl/MPLABXProjects/8changsm/unsolsms.txt</file>
-            <file>file:/home/davepl/MPLABXProjects/8changsm/lcd.h</file>
             <file>file:/home/davepl/MPLABXProjects/8changsm/gsm.c</file>
-            <file>file:/home/davepl/MPLABXProjects/8changsm/vend.h</file>
             <file>file:/home/davepl/MPLABXProjects/8changsm/gsm.h</file>
-            <file>file:/home/davepl/MPLABXProjects/8changsm/mcc_generated_files/memory.c</file>
             <file>file:/home/davepl/MPLABXProjects/8changsm/main.c</file>
         </group>
     </open-files>

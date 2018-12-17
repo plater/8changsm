@@ -178,16 +178,39 @@ void clock_display(void)
     goto dispclka;
 }
 
+void check_num(void)
+{//int memcmp(const void *s1, const void *s2, size_t n);
+    index = (gsmusm[0x0C] & 0x0F) * 2;
+    gsm_msg(smstxt);
+    gsm_receive(1, gsmmsg);
+    gsm_msg(smslst);
+    gsm_receive(++index, gsmmsg);
+    gsmflags.msggod = 0;
+    //Phone number starts gsmmsg[24]
+    int diffr = memcmp(gsmmsg + 24, spnum, 0x0B);
+    if(diffr == 0x00)
+    {
+        gsmflags.msggod = 1;
+    }
+    else
+    {
+        gsm_msg(smstxt);
+        gsm_receive(1, gsmusm);
+        gsm_msg(smsdel);
+        gsm_receive(1, gsmtim);
+    }
+}
+
 void parse_sms(void)
 {
     int diffr = memcmp(gsmusm, cmti, 0x05);
-    if(diffr == 0x00)
+    while(diffr == 0x00)
     {
-        index = (gsmusm[0x0C] & 0x0F) * 2;
-        gsm_msg(smstxt);
-        gsm_receive(1, gsmmsg);
-        gsm_msg(smslst);
-        gsm_receive(++index, gsmmsg);
+        check_num();
+        if(!gsmflags.msggod)
+        {
+            break;
+        }
         gsm_msg(setgsm);
         gsm_receive(1, gsdate);
         gsm_msg(smstxt);
@@ -208,6 +231,7 @@ void parse_sms(void)
         gsm_receive(1, gsmtim);
         sms_report();
         asm("NOP");
+        diffr = 0xFF;
     }
 }
 
@@ -668,15 +692,10 @@ void gsm_netwait(void)
 
 uint8_t EUSARTG_Read(void)
 {
-    TMR2_Initialize();
-    T2CONbits.TMR2ON = 1;
 //    TRISCbits.TRISC3 = 1;
     while(!PIR3bits.RC2IF)
     {
-        if(PIR4bits.TMR2IF)
-        {
-            return 0x0A;
-        }
+        
     }
 //    TRISCbits.TRISC3 = 0;
 

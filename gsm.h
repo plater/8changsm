@@ -33,6 +33,8 @@ uint8_t gsmtim[23];
 uint8_t gsdate[10];
 //Store time
 uint8_t gstime[10];
+//Phone number scratch pad
+uint8_t phnumb[11];
 uint8_t noofline;
 uint16_t index;
 
@@ -44,7 +46,9 @@ const uint16_t phonenum = 0x40;
 
 const uint8_t cmti[] = "+CMTI";
 const uint8_t pnum[] = "\"+27766520007\"\r";
+const uint8_t spnum[] = "27766520007";
 const uint8_t anum[] = "\"+27834604609\"\r";
+const uint8_t sanum[] = "27834604609";
 const uint8_t ackmsg[] = "Message received";
 const uint8_t mtmpcm[] = "*121*";
 const uint8_t vdcpcm[] = "*140*";
@@ -93,7 +97,7 @@ struct
     unsigned msgavl : 1;
     unsigned abrtmsg : 1;
     unsigned eomsg : 1;
-    unsigned spare6 : 1;
+    unsigned msggod : 1;
     unsigned spare7 : 1;
 } gsmflags;
 
@@ -106,6 +110,8 @@ void gsm_waitr(void);
 void gsm_transmit(uint8_t txbyte);
 
 void gsm_gettime(void);
+
+void check_num(void);
 
 void parse_sms(void);
 
