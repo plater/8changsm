@@ -37,6 +37,7 @@
             <word>const</word>
             <word>Cred</word>
             <word>eeprom</word>
+            <word>getbalance</word>
             <word>gsm</word>
             <word>gsmbyte</word>
             <word>gsmflags</word>

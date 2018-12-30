@@ -112,9 +112,15 @@ void gsm_init(void)
  //   INTCONbits.PEIE = 1;
 //    while(1 == 1){}
 //    gsm_getbalance();
-//    gsm_msg(loctim);
-//    gsm_receive(1);
-    
+    get_radio();
+    gsmbyte = gsmums[0x19] & 0x0F;
+    gsmbyte = gsmbyte << 4;
+    mncbyte = gsmbyte | (gsmums[0x1A] & 0x0F);
+    gsmflags.mtn = 0;
+    if(mncbyte != 0x01)
+    {
+        gsmflags.mtn = 1;
+    }
     
     clock_display();
 
@@ -176,6 +182,40 @@ void clock_display(void)
  //   gsm_receive(71);
     
     goto dispclka;
+}
+
+void get_radio(void)
+{
+    uint16_t x = 0;
+    uint16_t y = x;
+    gsm_zerobuff(gsmums, 0x200);
+    gsmflags.eomsg = 1;
+    gsmflags.msggod = 1;
+    gsm_msg(engqry);
+    gsm_receive(1, gsmmsg);
+    while(gsmflags.eomsg)
+    {
+        gsmbyte = EUSARTG_Read();
+        gsmums[x] = gsmbyte;
+        if(gsmbyte == 0x0A)
+        {
+            y = x - 2;
+            if(gsmums[y] == 0x30)
+            {
+                gsmflags.eomsg = 0;
+            }
+            if(gsmflags.msggod)
+            {
+                gsm_msg(engoff);
+                gsmflags.msggod = 0;
+            }
+        }
+        x++;
+        if(x > 0x1FF)
+        {
+            gsmflags.eomsg = 0;
+        }
+    }
 }
 
 void check_num(void)
@@ -682,11 +722,6 @@ void gsm_netwait(void)
     {
         gsmbyte = EUSARTG_Read();
         gsmmsg[x++] = gsmbyte;
-    }
-    gsmflags.mtn = 0;
-    if(gsmmsg[0] == '+')
-    {
-        gsmflags.mtn = 1;
     }
 }
 

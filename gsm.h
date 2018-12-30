@@ -20,6 +20,8 @@ extern "C" {
 
 //Gsm related memory
 uint8_t gsmbyte = 0;
+//moble network code 01 = Vodacom, 10 or 12 = Mtn
+uint8_t mncbyte = 0;
 //gsm scratch pad
 uint8_t gsmmsg[512];
 //sms storage
@@ -62,9 +64,12 @@ const uint8_t smslst[] = "AT+CMGL=\"ALL\"\r";
 const uint8_t smscap[] = "AT+CMGL=?\r";
 const uint8_t smstxt[] = "AT+CMGF=1\r";
 //other
-const uint8_t engqry[] = "AT+AT+CEER\r";
+const uint8_t alphon[] = "AT+CCPD=1";
+const uint8_t alpoff[] = "AT+CCPD=0";
+const uint8_t pvdnam[] = "AT+CSPN?\r";
+const uint8_t engqry[] = "AT+CENG=2\r";
 const uint8_t engfmt[] = "AT+CENG=?";
-const uint8_t engwrt[] = "AT+CENG?";
+const uint8_t engoff[] = "AT+CENG=0\r";
 const uint8_t noecho[] = "ATE0;V0\r";
 //USSD
 const uint8_t usdtst[] = "AT+CUSD=?\r";
@@ -110,6 +115,8 @@ void gsm_waitr(void);
 void gsm_transmit(uint8_t txbyte);
 
 void gsm_gettime(void);
+
+void get_radio(void);
 
 void check_num(void);
 

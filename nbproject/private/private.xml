@@ -5,12 +5,12 @@
             <url>gsm.c</url>
             <bookmark id="1">
                 <name/>
-                <line>271</line>
+                <line>273</line>
                 <key/>
             </bookmark>
             <bookmark id="2">
                 <name/>
-                <line>433</line>
+                <line>435</line>
                 <key/>
             </bookmark>
         </file>
@@ -19,7 +19,9 @@
         <group>
             <file>file:/home/davepl/MPLABXProjects/8changsm/gsm.c</file>
             <file>file:/home/davepl/MPLABXProjects/8changsm/gsm.h</file>
+            <file>file:/home/davepl/MPLABXProjects/8changsm/todonext.txt</file>
             <file>file:/home/davepl/MPLABXProjects/8changsm/main.c</file>
+            <file>file:/home/davepl/MPLABXProjects/8changsm/CENGoutput.txt</file>
         </group>
     </open-files>
 </project-private>
